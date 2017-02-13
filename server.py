@@ -15,7 +15,8 @@ class Orders(db.Model):
 
 @app.route('/')
 def score():
-    first_unfinish = Orders.query.filter(Orders.confirmed.is_(None)).first()
+    first_unfinish = Orders.query.order_by(
+        Orders.created).filter(Orders.confirmed.is_(None)).first()
     seconds = round(
         (datetime.now() - first_unfinish.created).total_seconds())
     unfinish_amount = Orders.query.filter(Orders.confirmed.is_(None)).count()
