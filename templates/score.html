@@ -9,53 +9,32 @@
     <meta name="author" content="">
     <meta http-equiv="refresh" content="10">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="favicon.ico">
-
     <title>Score</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <style type="text/css">
-      .main {
-        background-color: #f8f8f8;
-        border: 1px solid grey;
-        border-radius: 5px;
-      }
-    </style>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
   </head>
   <body>
-      <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">Рейтинг магазина</a>
-        </div>
-      </div>
-    </nav>
     <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3 main">
-          <h1>Waiting time: <span id="score" class="text-nowrap" data-score="{{ seconds }}"></span></h1>
-          <p>Unfinished orders: <span class="text-nowrap text-muted">{{ unfinish }}</span></p>
-          <p>Finished orders: <span class="text-nowrap text-muted">{{ finished }}</span></p>
-        </div>
-      </div>
-    </div><!-- /.container -->
+        <h2>Waiting time:</h2> 
+        <span id="score" data-score="{{ seconds }}"></span>
+        <p>Unfinished orders: <span>{{ unfinish }}</span></p>
+        <p>Finished orders: <span>{{ finished }}</span></p>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script>
       $(document).ready(function(){
         var score = $('#score');
         var score_value = score.data('score');
         if (score_value < 420){
-          score.css({'color': 'green'});
+          score.css({'color': '#76ff03'});
         } else if ((score_value >= 420) && (score_value < 1800)){
-          score.css({'color': 'yellow'});
+          score.css({'color': '#ffea00'});
         } else if (score_value > 1800){
-          score.css({'color': 'red'});
+          score.css({'color': '#ff1744'});
         }
         var minutes = Math.floor(score_value / 60);
         var seconds = score_value - minutes * 60;
-        score.html(minutes + 'мин. ' + seconds + 'сек.');
+        score.html(minutes + '<span class="letter">m</span> ' + seconds + '<span class="letter">s</span>');
       });
     </script>
   </body>
